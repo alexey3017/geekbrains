@@ -1,6 +1,9 @@
 import MessagesList from "./Message";
-import Button from "./Button";
-import { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
+import MessageForm from "./MessageForm";
+import Grid from "@material-ui/core/Grid";
+import Divider from "@material-ui/core/Divider";
+import { makeStyles } from "@material-ui/core/styles";
 
 function MessageField(props) {
   const [messages, setMessages] = useState([
@@ -8,24 +11,13 @@ function MessageField(props) {
     { author: "Валера", text: "Давай общаться?" },
   ]);
 
-  const [message, setMessage] = useState("");
-
-  const onSentMessage = useCallback((event) => {
-    if (message.text !== "" || message.text !== "undefined") {
-      setMessages([...messages, message]);
-    } else {
-      alert("Введите сообщение");
-    }
-  });
-
-  const onChangeTextarea = useCallback((event) => {
-    let text = event.target.value;
+  const addMesage = useCallback((msg) => {
     const message = {
       author: "Алексей",
-      text: text,
+      text: msg,
     };
-    setMessage(message);
-  }, []);
+    setMessages([...messages, message]);
+  });
 
   const onAnwerBot = useCallback(() => {
     const message = {
@@ -34,30 +26,19 @@ function MessageField(props) {
     };
     setMessages([...messages, message]);
   });
-
   useEffect(() => {
     if (messages[messages.length - 1].author === "Алексей") {
       setTimeout(onAnwerBot, 500);
     }
   }, [messages]);
-
   return (
-    <div className={"wrapper"}>
+    <Grid item xs={9}>
       <MessagesList messages={messages} />
-
-      <div className={"wrapper__text"}>
-        <textarea
-          onChange={onChangeTextarea}
-          value={props.message}
-          placeholder="Введите сообщение"
-        ></textarea>
-      </div>
-      <div className="button__wrapper">
-        <Button type="submit" onClick={onSentMessage}>
-          Отправить
-        </Button>
-      </div>
-    </div>
+      <Divider />
+      <Grid container style={{ padding: "20px" }}>
+        <MessageForm addToMessage={addMesage} />
+      </Grid>
+    </Grid>
   );
 }
 
