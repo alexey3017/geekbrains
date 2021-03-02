@@ -1,4 +1,5 @@
-import React from "react";
+import { useCallback } from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
@@ -15,40 +16,26 @@ const useStyles = makeStyles({
     height: "90vh",
   },
 });
-function ChatList() {
+function ChatList({ chats, chatId }) {
   const classes = useStyles();
+  const renderChats = useCallback((chat, i) => (
+    <ListItem key={i}>
+      <ListItemIcon>
+        <Avatar alt={chat.name} src={chat.avatar} />
+      </ListItemIcon>
+      <ListItemText>
+        <Link to={`/chats/${chat.id}`}>
+          <b style={{ color: chat.id === chatId ? "#000000" : "grey" }}>
+            {chat.name}
+          </b>
+        </Link>
+      </ListItemText>
+      <ListItemText secondary="online" align="right"></ListItemText>
+    </ListItem>
+  ));
   return (
-    <Grid item xs={3} className={classes.borderRight500}>
-      <List className={"chatlist"}>
-        <ListItem button key="RemySharp">
-          <ListItemIcon>
-            <Avatar
-              alt="Remy Sharp"
-              src="https://material-ui.com/static/images/avatar/1.jpg"
-            />
-          </ListItemIcon>
-          <ListItemText primary="Remy Sharp">Remy Sharp</ListItemText>
-          <ListItemText secondary="online" align="right"></ListItemText>
-        </ListItem>
-        <ListItem button key="Alice">
-          <ListItemIcon>
-            <Avatar
-              alt="Alice"
-              src="https://material-ui.com/static/images/avatar/3.jpg"
-            />
-          </ListItemIcon>
-          <ListItemText primary="Alice">Alice</ListItemText>
-        </ListItem>
-        <ListItem button key="CindyBaker">
-          <ListItemIcon>
-            <Avatar
-              alt="Cindy Baker"
-              src="https://material-ui.com/static/images/avatar/2.jpg"
-            />
-          </ListItemIcon>
-          <ListItemText primary="Cindy Baker">Cindy Baker</ListItemText>
-        </ListItem>
-      </List>
+    <Grid item xs={4} className={classes.borderRight500}>
+      <List className={"chatlist"}>{chats.map(renderChats)}</List>
     </Grid>
   );
 }

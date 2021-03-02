@@ -1,9 +1,17 @@
 import Button from "./Button";
-import React, { useCallback, useState } from "react";
-import { TextField, ThemeProvider, createMuiTheme } from "@material-ui/core";
+import React, { useCallback, useState, useEffect, useRef } from "react";
+import { AUTHORS } from "../utils/constants";
+import {
+  TextField,
+  ThemeProvider,
+  createMuiTheme,
+  Grid,
+} from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 
-function MessageForm({ addToMessage }) {
+function MessageForm({ onAddMessage }) {
+  const textField = useRef(null);
+
   const theme = createMuiTheme({
     palette: {
       primary: {
@@ -22,25 +30,32 @@ function MessageForm({ addToMessage }) {
     (e) => {
       if (value) {
         e.preventDefault();
-        addToMessage(value);
+        onAddMessage(value, AUTHORS.ME);
         setValue("");
       } else {
         alert("Введите сообщение");
       }
     },
-    [addToMessage, value]
+    [onAddMessage, value]
   );
+  useEffect(() => {
+    if (textField.current) {
+      textField.current.focus();
+    }
+  }, []);
   return (
     <form onSubmit={handleSubmit}>
       <ThemeProvider theme={theme}>
         <TextField
+          style={{ width: "60%" }}
           id="standard-textarea"
           type="text"
           label="Сообщение"
           placeholder="Введите текст..."
-          color={"primary"}
+          color="primary"
           onChange={textChange}
           value={value}
+          inputRef={textField}
         />
       </ThemeProvider>
       <Button type="submit">
