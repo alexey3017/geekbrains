@@ -1,5 +1,7 @@
 import { TextField, Fab, Button, Grid, List, Divider } from "@material-ui/core";
 import { useState, useCallback, useEffect, useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addToMessage } from "../store/messages/actions";
 import {
   ThemeProvider,
   useTheme,
@@ -24,33 +26,11 @@ export default function Chats() {
   const classes = useStyles();
   const params = useParams();
 
-  const [chats, setChats] = useState([
-    {
-      id: "id1",
-      name: "Remy Sharp",
-      avatar: "https://material-ui.com/static/images/avatar/1.jpg",
-      messageList: [
-        { author: AUTHORS.ME, text: "Привет" },
-        { author: AUTHORS.BOT, text: "Привет я бот Валера" },
-        { author: AUTHORS.BOT, text: "Давай общаться?" },
-      ],
-    },
-    {
-      id: "id2",
-      name: "Alice",
-      avatar: "https://material-ui.com/static/images/avatar/3.jpg",
-      messageList: [{ author: AUTHORS.ME, text: "Привет Алиса" }],
-    },
-    {
-      id: "id3",
-      name: "CindyBaker",
-      avatar: "https://material-ui.com/static/images/avatar/2.jpg",
-      messageList: [
-        { author: AUTHORS.ME, text: "Привет" },
-        { author: AUTHORS.BOT, text: "Как твои дела?" },
-      ],
-    },
-  ]);
+  const chats = useSelector((state) => state.chats.chatList);
+  const messages = useSelector((state) => state.messages.messageList);
+
+  const dispatch = useDispatch();
+
   const selectedChat = useMemo(
     () => chats.find((chat) => chat.id === params.chatId),
     [params, chats]
@@ -61,32 +41,17 @@ export default function Chats() {
     [params, chats]
   );
 
-  const addMessage = useCallback(
-    (text, author) => {
-      const newChats = [...chats];
-      newChats[selectedChatIndex] = {
-        ...selectedChat,
-        messageList: [...selectedChat.messageList, { text, author }],
-      };
+  const messageList = useMemo(() => messages?.[selectedChat?.id] || [], [
+    messages,
+    selectedChat,
+  ]);
 
-      setChats(newChats);
+  const sendMessage = useCallback(
+    (text, author) => {
+      dispatch(addToMessage(selectedChat?.id, { text, author }));
     },
-    [chats, selectedChat, selectedChatIndex]
+    [selectedChat, dispatch]
   );
-  useEffect(() => {
-    let timeout;
-    console.log();
-    if (
-      selectedChat?.messageList?.[selectedChat.messageList.length - 1]
-        .author === "Я"
-    ) {
-      timeout = setTimeout(
-        () => addMessage("Настало мое время! Я Валера!", AUTHORS.BOT),
-        1000
-      );
-    }
-    return () => clearTimeout(timeout);
-  }, [chats, selectedChat, selectedChatIndex]);
 
   if (!params.chatId || !selectedChat) {
     return (
@@ -102,8 +67,8 @@ export default function Chats() {
         <ChatList chats={chats} chatId={params.chatId} />
         <Divider />
         <Grid item xs={7} className={classes.borderRight}>
-          <MessagesList messages={selectedChat?.messageList || []} />
-          <MessageForm onAddMessage={addMessage} />
+          <MessagesList messages={messageList} />
+          <MessageForm onAddMessage={sendMessage} />
         </Grid>
       </Grid>
     </>

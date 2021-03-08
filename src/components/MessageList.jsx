@@ -1,5 +1,6 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles({
   messageArea: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles({
 
 function MessagesList({ messages }) {
   const classes = useStyles();
+
   const renderMessage = useCallback(
     (message, idx) => (
       <li
