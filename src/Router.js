@@ -2,6 +2,7 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Chats from "./components/Chats";
+import Posts from "./components/Posts";
 function Router() {
   return (
     <BrowserRouter>
@@ -21,6 +22,11 @@ function Router() {
             Профиль
           </Link>
         </li>
+        <li className={"nav__list"}>
+          <Link to="/posts" className={"nav__link"}>
+            Посты
+          </Link>
+        </li>
       </ul>
 
       <Switch>
@@ -35,6 +41,9 @@ function Router() {
         </Route>
         <Route path="/profile">
           <Profile />
+        </Route>
+        <Route path="/posts">
+          <Posts />
         </Route>
       </Switch>
     </BrowserRouter>

@@ -1,6 +1,5 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles({
   messageArea: {
