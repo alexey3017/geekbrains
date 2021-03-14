@@ -1,4 +1,5 @@
-import React from "react";
+import { useCallback } from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
@@ -14,41 +15,46 @@ const useStyles = makeStyles({
     borderRight: "1px solid #e0e0e0",
     height: "90vh",
   },
+  brr: {
+    borderRadius: "15px",
+  },
+  ot: {
+    padding: "0",
+    margin: "0",
+  },
 });
-function ChatList() {
+function ChatList({ chats, chatId }) {
   const classes = useStyles();
+  const renderChats = useCallback((chat, i) => (
+    <ListItem key={i}>
+      <Link to={`/chats/${chat.id}`}>
+        <ListItemIcon
+          style={{
+            border: chat.id === chatId ? "1px solid #000000" : "",
+            borderRadius: "15px",
+            padding: "5px",
+          }}
+        >
+          <Avatar alt={chat.name} src={chat.avatar} />
+        </ListItemIcon>
+      </Link>
+      <ListItemText className={"visibility"}>
+        <Link to={`/chats/${chat.id}`}>
+          <b style={{ color: chat.id === chatId ? "#000000" : "grey" }}>
+            {chat.name}
+          </b>
+        </Link>
+      </ListItemText>
+      <ListItemText
+        className={"visibility"}
+        secondary="online"
+        align="right"
+      ></ListItemText>
+    </ListItem>
+  ));
   return (
-    <Grid item xs={3} className={classes.borderRight500}>
-      <List className={"chatlist"}>
-        <ListItem button key="RemySharp">
-          <ListItemIcon>
-            <Avatar
-              alt="Remy Sharp"
-              src="https://material-ui.com/static/images/avatar/1.jpg"
-            />
-          </ListItemIcon>
-          <ListItemText primary="Remy Sharp">Remy Sharp</ListItemText>
-          <ListItemText secondary="online" align="right"></ListItemText>
-        </ListItem>
-        <ListItem button key="Alice">
-          <ListItemIcon>
-            <Avatar
-              alt="Alice"
-              src="https://material-ui.com/static/images/avatar/3.jpg"
-            />
-          </ListItemIcon>
-          <ListItemText primary="Alice">Alice</ListItemText>
-        </ListItem>
-        <ListItem button key="CindyBaker">
-          <ListItemIcon>
-            <Avatar
-              alt="Cindy Baker"
-              src="https://material-ui.com/static/images/avatar/2.jpg"
-            />
-          </ListItemIcon>
-          <ListItemText primary="Cindy Baker">Cindy Baker</ListItemText>
-        </ListItem>
-      </List>
+    <Grid item sm={5} xs={3} className={classes.borderRight500}>
+      <List className={"chatlist"}>{chats.map(renderChats)}</List>
     </Grid>
   );
 }

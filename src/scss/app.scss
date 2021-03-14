@@ -6,4 +6,120 @@
 body{
   background: $background;
 }
+.wrapper{
+  text-align: center;
+}
+form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom:1px solid #e0e0e0;
+  flex-wrap: wrap;
+}
+.nav__list{
+  padding: 10px;
+}
+.nav__link{
+  padding: 10px;
+}
+.nav__link:hover{
+  background-color: #83b231;
+  text-align: center;
+  color: #fff;
+}
+p{
+  padding: 5px;
+}
+.makeStyles-messageArea-3{
+  overflow: auto;
+}
+.h1{
+  text-align: center;
+}
+.post{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.post__wrapper{
+  max-width: 300px;
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px;
+}
+.profile{
+  text-align: center;
+}
+@media (max-width: 600px){
+  .logo{
+    width: 90%;
+    height: auto;
+  }
+}
+@media (max-width: 768px){
+  .logo{
+    width: 70%;
+    height: auto;
+  }
+}
+.visibility {
+  display: none;
+}
 
+@media (min-width: 768px) {
+  .visibility {
+    display: block;
+  }
+}
+.makeStyles-borderRight500-2
+.chatlist li{
+  padding: 10px;
+  margin: 0;
+}
+
+
+.speech-bubble-container {
+  position: fixed;
+  width: 100%;
+  bottom: 20px;
+  z-index: 1000;
+}
+
+.speech-bubble {
+  padding: 0 10px;
+  min-height: 58px;
+  position: relative;
+  width: 100%;
+  background: #cfccc4;
+}
+
+.speech-bubble:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-top-color: #cfccc4;
+  border-bottom: 0;
+  margin-left: -20px;
+  margin-bottom: -20px;
+}
+
+.close-install-message-icon {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  color: #31b0d5 !important;
+}
+
+.push {
+  margin: 5px;
+}
