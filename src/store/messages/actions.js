@@ -7,12 +7,18 @@ export const addToMessage = (chatId, message) => ({
   chatId,
   message,
 });
+
 export const addMessageThunk = (chatId, message) => (dispatch, getState) => {
   dispatch(addToMessage(chatId, message));
 
   if (message.author !== AUTHORS.BOT) {
     setTimeout(() => {
-      dispatch(addToMessage(chatId, { text: "Hello", author: AUTHORS.BOT }));
+      dispatch(
+        addToMessage(chatId, {
+          text: "Настало мое время я Бот Валера",
+          author: AUTHORS.BOT,
+        })
+      );
     }, 1000);
   }
 };

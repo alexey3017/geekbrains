@@ -1,19 +1,17 @@
 import { TextField, Fab, Button, Grid, List, Divider } from "@material-ui/core";
 import { useState, useCallback, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addToMessage } from "../store/messages/actions";
+import { addMessageThunk } from "../store/messages/actions";
 import {
   ThemeProvider,
   useTheme,
   createMuiTheme,
   makeStyles,
 } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
+
 import MessagesList from "./MessageList";
-import Input from "./MessageForm";
 import { AUTHORS } from "../utils/constants";
 import ChatList from "./ChatList";
-import { usePrev } from "../utils/hooks";
 import { useParams, useRouteMatch } from "react-router-dom";
 import MessageForm from "./MessageForm";
 const useStyles = makeStyles({
@@ -48,7 +46,7 @@ export default function Chats() {
 
   const sendMessage = useCallback(
     (text, author) => {
-      dispatch(addToMessage(selectedChat?.id, { text, author }));
+      dispatch(addMessageThunk(selectedChat?.id, { text, author }));
     },
     [selectedChat, dispatch]
   );
