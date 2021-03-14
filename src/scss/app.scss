@@ -6,4 +6,49 @@
 body{
   background: $background;
 }
-
+.wrapper{
+  text-align: center;
+}
+form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom:1px solid #e0e0e0;
+}
+.nav__list{
+  padding: 10px;
+}
+.nav__link{
+  padding: 10px;
+}
+.nav__link:hover{
+  background-color: #83b231;
+  text-align: center;
+  color: #fff;
+}
+p{
+  padding: 5px;
+}
+.makeStyles-messageArea-3{
+  overflow: auto;
+}
+.h1{
+  text-align: center;
+}
+.post{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.post__wrapper{
+  max-width: 300px;
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px;
+}
