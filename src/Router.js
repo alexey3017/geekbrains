@@ -3,6 +3,8 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Chats from "./components/Chats";
 import Posts from "./components/Posts";
+import PushToggle from "./components/PushToggle";
+import InstallPopup from "./components/InstallPopup";
 function Router() {
   return (
     <BrowserRouter>
@@ -28,7 +30,8 @@ function Router() {
           </Link>
         </li>
       </ul>
-
+      <PushToggle />
+      <InstallPopup />
       <Switch>
         <Route exact path="/">
           <Home />

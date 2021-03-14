@@ -64,7 +64,7 @@ export default function Chats() {
       <Grid container>
         <ChatList chats={chats} chatId={params.chatId} />
         <Divider />
-        <Grid item xs={7} className={classes.borderRight}>
+        <Grid item xs={9} sm={7} className={classes.borderRight}>
           <MessagesList messages={messageList} />
           <MessageForm onAddMessage={sendMessage} />
         </Grid>
